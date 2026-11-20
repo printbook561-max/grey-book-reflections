@@ -1389,6 +1389,13 @@ footer a:hover { color: var(--gold); }
   border: 0; background: none; padding: 4px; cursor: pointer; color: var(--green-wa);
   font: 500 .85rem 'DM Sans', sans-serif; text-decoration: underline; text-underline-offset: 3px;
 }
+.btn-quick-step2 {
+  display: inline-flex; align-items: center; justify-content: center; width: 100%; max-width: 420px; min-height: 48px;
+  margin-top: 8px; padding: 12px 20px; border-radius: 999px; cursor: pointer;
+  background: transparent; color: var(--green-wa); border: 2px solid var(--green-wa);
+  font: 600 .95rem 'DM Sans', sans-serif; animation: quick-glow 1.6s ease-in-out 2;
+}
+.btn-quick-step2:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; }
 .btn-quick-wa.is-ready { animation: quick-glow 1.4s ease-in-out infinite; }
 .quick-alt { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 18px; margin-top: 10px; }
 .quick-alt-link {

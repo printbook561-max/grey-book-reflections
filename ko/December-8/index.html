@@ -117,7 +117,7 @@
 
 <section class="media-section fade-up fade-up-4" id="media"
   data-base="https://media.nabookiestranslations.org/ko/12-08" data-name="그레이 북 반성 - 12월 8일 - KO" data-title="그레이 북 반성 – 12월 8일"
-  data-url="https://grey-book-reflections.nabookiestranslations.org/ko/December-8" data-formats="mp4,mp3,m4a,ogg,wav" data-v="{&quot;jpg&quot;: 48195, &quot;m4a&quot;: 1261585, &quot;mp3&quot;: 1337132, &quot;mp4&quot;: 1780231, &quot;ogg&quot;: 605541, &quot;wav&quot;: 8020110}" data-msgs="{&quot;preparing&quot;: &quot;준비 중…&quot;, &quot;ready&quot;: &quot;준비 완료 — 보내려면 다시 탭하세요&quot;, &quot;error&quot;: &quot;파일을 불러올 수 없습니다. 다시 시도하세요.&quot;, &quot;zipping&quot;: &quot;ZIP 만드는 중…&quot;, &quot;linkmiss&quot;: &quot;링크가 안 갔나요? 여기서 보내기&quot;}">
+  data-url="https://grey-book-reflections.nabookiestranslations.org/ko/December-8" data-formats="mp4,mp3,m4a,ogg,wav" data-v="{&quot;jpg&quot;: 48195, &quot;m4a&quot;: 1261585, &quot;mp3&quot;: 1337132, &quot;mp4&quot;: 1780231, &quot;ogg&quot;: 605541, &quot;wav&quot;: 8020110}" data-msgs="{&quot;preparing&quot;: &quot;준비 중…&quot;, &quot;ready&quot;: &quot;준비 완료 — 보내려면 다시 탭하세요&quot;, &quot;error&quot;: &quot;파일을 불러올 수 없습니다. 다시 시도하세요.&quot;, &quot;zipping&quot;: &quot;ZIP 만드는 중…&quot;, &quot;linkmiss&quot;: &quot;링크가 안 갔나요? 여기서 보내기&quot;, &quot;step2&quot;: &quot;2단계: 링크 보내기&quot;}">
   <div class="glass-card media-card">
     <div class="gold-bar"></div>
     <div class="card-inner">
@@ -419,7 +419,10 @@
   function preparar(ext) {
     if (archivos[ext]) return Promise.resolve(archivos[ext]);
     if (!preparando[ext]) preparando[ext] = conLimite(traer(ext), 15000).then(function (b) {
-      var f = new File([b], nombre + '.' + ext, { type: tipos[ext] });
+      // nombre sin tildes ni símbolos: algunas apps (WhatsApp en iPhone) se atascan con nombres "raros"
+      var simple = nombre.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\w\- ]+/g, '').replace(/\s+/g, ' ').trim();
+      if (!/[A-Za-z]{3}/.test(simple)) simple = 'Grey Book Reflection ' + base.split('/').slice(-2).reverse().join(' ');
+      var f = new File([b], (simple || 'audio') + '.' + ext, { type: tipos[ext] });
       if (!navigator.canShare({ files: [f] })) throw new Error('no-share');
       return (archivos[ext] = f);
     }).catch(function (e) { delete preparando[ext]; throw e; });
@@ -446,9 +449,12 @@
     function hecho() {
       btn.classList.remove('is-ready'); aviso('', false, st);
       if (!rapido) return;
-      // por si WhatsApp se queda solo con el audio: un toque más manda el enlace
+      // segundo paso: el enlace. En iPhone es obligatorio (WhatsApp descarta el texto que va con un archivo
+      // y, si se busca el contacto dentro de WhatsApp, el texto lo atasca); en el resto, por si no llegó.
       var a = document.createElement('button');
-      a.type = 'button'; a.className = 'quick-link-miss'; a.textContent = msgs.linkmiss;
+      a.type = 'button';
+      a.className = esIOS ? 'btn-quick-step2' : 'quick-link-miss';
+      a.textContent = esIOS ? msgs.step2 : msgs.linkmiss;
       a.addEventListener('click', function () { wa(texto); });
       st.appendChild(a);
     }
@@ -460,7 +466,8 @@
       if (!puedeArchivos) { wa(texto + '\n' + src(ext)); return; }        // computador: WhatsApp Web con el enlace
       var f = archivos[ext];
       if (f) {                                                             // listo: compartir en este mismo toque
-        navigator.share({ files: [f], text: texto }).then(hecho, function (e) {
+        // en iPhone solo el archivo (el enlace va en el paso 2); en Android archivo + texto juntos
+        navigator.share(esIOS ? { files: [f] } : { files: [f], text: texto }).then(hecho, function (e) {
           if (e && e.name === 'AbortError') { aviso('', false, st); return; }
           if (e && e.name === 'NotAllowedError') { listo(); return; }
           fallo();

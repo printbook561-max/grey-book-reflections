@@ -116,7 +116,7 @@
 
 <section class="media-section fade-up fade-up-4" id="media"
   data-base="https://media.nabookiestranslations.org/fr/03-20" data-name="Réflexion Livre Gris - 20 Mars - FR" data-title="Réflexion Livre Gris – 20 Mars"
-  data-url="https://grey-book-reflections.nabookiestranslations.org/fr/March-20" data-formats="mp4,mp3,m4a,ogg,wav" data-v="{&quot;jpg&quot;: 47587, &quot;m4a&quot;: 1041214, &quot;mp3&quot;: 1120940, &quot;mp4&quot;: 1478750, &quot;ogg&quot;: 503442, &quot;wav&quot;: 6723150}" data-msgs="{&quot;preparing&quot;: &quot;Préparation…&quot;, &quot;ready&quot;: &quot;Prêt : touchez à nouveau pour envoyer&quot;, &quot;error&quot;: &quot;Impossible de charger le fichier. Réessayez.&quot;, &quot;zipping&quot;: &quot;Création du ZIP…&quot;, &quot;linkmiss&quot;: &quot;Lien manquant ? Envoyez-le ici&quot;}">
+  data-url="https://grey-book-reflections.nabookiestranslations.org/fr/March-20" data-formats="mp4,mp3,m4a,ogg,wav" data-v="{&quot;jpg&quot;: 47587, &quot;m4a&quot;: 1041214, &quot;mp3&quot;: 1120940, &quot;mp4&quot;: 1478750, &quot;ogg&quot;: 503442, &quot;wav&quot;: 6723150}" data-msgs="{&quot;preparing&quot;: &quot;Préparation…&quot;, &quot;ready&quot;: &quot;Prêt : touchez à nouveau pour envoyer&quot;, &quot;error&quot;: &quot;Impossible de charger le fichier. Réessayez.&quot;, &quot;zipping&quot;: &quot;Création du ZIP…&quot;, &quot;linkmiss&quot;: &quot;Lien manquant ? Envoyez-le ici&quot;, &quot;step2&quot;: &quot;Étape 2 : envoyer le lien&quot;}">
   <div class="glass-card media-card">
     <div class="gold-bar"></div>
     <div class="card-inner">
@@ -418,7 +418,10 @@
   function preparar(ext) {
     if (archivos[ext]) return Promise.resolve(archivos[ext]);
     if (!preparando[ext]) preparando[ext] = conLimite(traer(ext), 15000).then(function (b) {
-      var f = new File([b], nombre + '.' + ext, { type: tipos[ext] });
+      // nombre sin tildes ni símbolos: algunas apps (WhatsApp en iPhone) se atascan con nombres "raros"
+      var simple = nombre.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\w\- ]+/g, '').replace(/\s+/g, ' ').trim();
+      if (!/[A-Za-z]{3}/.test(simple)) simple = 'Grey Book Reflection ' + base.split('/').slice(-2).reverse().join(' ');
+      var f = new File([b], (simple || 'audio') + '.' + ext, { type: tipos[ext] });
       if (!navigator.canShare({ files: [f] })) throw new Error('no-share');
       return (archivos[ext] = f);
     }).catch(function (e) { delete preparando[ext]; throw e; });
@@ -445,9 +448,12 @@
     function hecho() {
       btn.classList.remove('is-ready'); aviso('', false, st);
       if (!rapido) return;
-      // por si WhatsApp se queda solo con el audio: un toque más manda el enlace
+      // segundo paso: el enlace. En iPhone es obligatorio (WhatsApp descarta el texto que va con un archivo
+      // y, si se busca el contacto dentro de WhatsApp, el texto lo atasca); en el resto, por si no llegó.
       var a = document.createElement('button');
-      a.type = 'button'; a.className = 'quick-link-miss'; a.textContent = msgs.linkmiss;
+      a.type = 'button';
+      a.className = esIOS ? 'btn-quick-step2' : 'quick-link-miss';
+      a.textContent = esIOS ? msgs.step2 : msgs.linkmiss;
       a.addEventListener('click', function () { wa(texto); });
       st.appendChild(a);
     }
@@ -459,7 +465,8 @@
       if (!puedeArchivos) { wa(texto + '\n' + src(ext)); return; }        // computador: WhatsApp Web con el enlace
       var f = archivos[ext];
       if (f) {                                                             // listo: compartir en este mismo toque
-        navigator.share({ files: [f], text: texto }).then(hecho, function (e) {
+        // en iPhone solo el archivo (el enlace va en el paso 2); en Android archivo + texto juntos
+        navigator.share(esIOS ? { files: [f] } : { files: [f], text: texto }).then(hecho, function (e) {
           if (e && e.name === 'AbortError') { aviso('', false, st); return; }
           if (e && e.name === 'NotAllowedError') { listo(); return; }
           fallo();
