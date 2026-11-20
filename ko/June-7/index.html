@@ -126,6 +126,11 @@
         <button class="btn-quick-wa" data-action="share" data-ext="ogg"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg><span>WhatsApp으로 오디오와 링크 보내기</span></button>
         <p class="quick-hint">WhatsApp에서 연락처를 고르세요. 오디오와 이 묵상의 링크가 전달됩니다.</p>
         <p class="media-status quick-status" aria-live="polite"></p>
+        <div class="quick-alt">
+          <a class="quick-alt-link" target="_blank" rel="noopener"
+             href="https://api.whatsapp.com/send?text=%EA%B7%B8%EB%A0%88%EC%9D%B4%20%EB%B6%81%20%EB%B0%98%EC%84%B1%20%E2%80%93%206%EC%9B%94%207%EC%9D%BC%0Ahttps%3A%2F%2Fgrey-book-reflections.nabookiestranslations.org%2Fko%2FJune-7"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg><span>링크만 보내기</span></a>
+          <a class="quick-alt-link" data-alt-audio href="https://media.nabookiestranslations.org/ko/06-07.ogg?v=589298" download><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>오디오 다운로드</span></a>
+        </div>
       </div>
       <h2 class="media-heading">듣고 보기</h2>
       <div class="media-tabs" role="tablist">
@@ -384,16 +389,49 @@
       .then(function () { busy(zipBtn, false); });
   });
 
-  // enviar por WhatsApp: con archivo si el móvil lo permite; si no, enlace
+  // ── enviar por WhatsApp ─────────────────────────────────────────────
+  // iPhone/Safari solo deja abrir el menú de compartir si navigator.share() se llama EN EL MISMO toque,
+  // sin esperar descargas. Por eso el archivo se prepara antes (al ver la sección o al tocar) y,
+  // si aún no está, el primer toque lo prepara y el botón pide un segundo toque. Nada se queda colgado:
+  // la descarga tiene tiempo límite y siempre quedan "Solo el enlace" y "Descargar audio".
+  var esApple = /iP(hone|ad|od)/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && 'ontouchend' in document);
+  var puedeArchivos = !!(navigator.canShare && navigator.share && window.File);
+  var texto = titulo + '\n' + url;
+  var archivos = {};          // ext → File listo para compartir
+  var preparando = {};        // ext → promesa en curso
+  function wa(t) { window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(t), '_blank', 'noopener'); }
+  function conLimite(p, ms) {
+    return Promise.race([p, new Promise(function (_, ko) { setTimeout(function () { ko(new Error('timeout')); }, ms); })]);
+  }
+  function preparar(ext) {
+    if (archivos[ext]) return Promise.resolve(archivos[ext]);
+    if (!preparando[ext]) preparando[ext] = conLimite(traer(ext), 25000).then(function (b) {
+      var f = new File([b], nombre + '.' + ext, { type: tipos[ext] });
+      if (!navigator.canShare({ files: [f] })) throw new Error('no-share');
+      return (archivos[ext] = f);
+    }).catch(function (e) { delete preparando[ext]; throw e; });
+    return preparando[ext];
+  }
+
   sec.querySelectorAll('[data-action="share"]').forEach(function (btn) {
-    var ext = btn.dataset.ext, archivo = null;
     var rapido = !!btn.closest('.quick-send');
+    var ext = btn.dataset.ext;
+    // en iPhone el audio va en M4A (WhatsApp de iOS lo recibe mejor que OGG)
+    if (rapido && esApple && ver.m4a) {
+      ext = 'm4a';
+      var alt = sec.querySelector('[data-alt-audio]');
+      if (alt) alt.href = src('m4a');
+    }
+    btn.dataset.ext = ext;
     var st = rapido ? sec.querySelector('.quick-status') : status;
-    var texto = titulo + '\n' + url;
-    function wa(t) { window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(t), '_blank', 'noopener'); }
-    function enlace() { wa(texto + '\n' + src(ext)); }
+    function fallo() {
+      aviso(msgs.error, true, st);
+      if (rapido) sec.querySelector('.quick-alt').classList.add('is-visible');
+      else wa(texto + '\n' + src(ext));
+    }
+    function listo() { btn.classList.add('is-ready'); aviso(msgs.ready, false, st); }
     function hecho() {
-      aviso('', false, st);
+      btn.classList.remove('is-ready'); aviso('', false, st);
       if (!rapido) return;
       // por si WhatsApp se queda solo con el audio: un toque más manda el enlace
       var a = document.createElement('button');
@@ -401,34 +439,44 @@
       a.addEventListener('click', function () { wa(texto); });
       st.appendChild(a);
     }
-    function compartir() {
-      return navigator.share({ files: [archivo], text: texto }).then(hecho, function (e) {
-        if (e && e.name === 'AbortError') { aviso('', false, st); return; }
-        if (e && e.name === 'NotAllowedError') { aviso(msgs.ready, false, st); return; } // se agotó el gesto: otro toque
-        enlace();
-      });
+    if (puedeArchivos) {
+      // empezar a preparar en cuanto el dedo toca el botón (antes del "click")
+      btn.addEventListener('pointerdown', function () { preparar(ext).catch(function () {}); }, { passive: true });
     }
     btn.addEventListener('click', function () {
-      if (!navigator.canShare || !window.File) { enlace(); return; }
-      if (archivo) { compartir(); return; }
+      if (!puedeArchivos) { wa(texto + '\n' + src(ext)); return; }        // computador: WhatsApp Web con el enlace
+      var f = archivos[ext];
+      if (f) {                                                             // listo: compartir en este mismo toque
+        navigator.share({ files: [f], text: texto }).then(hecho, function (e) {
+          if (e && e.name === 'AbortError') { aviso('', false, st); return; }
+          if (e && e.name === 'NotAllowedError') { listo(); return; }
+          fallo();
+        });
+        return;
+      }
       busy(btn, true); aviso(msgs.preparing, false, st);
-      traer(ext).then(function (b) {
-        archivo = new File([b], nombre + '.' + ext, { type: tipos[ext] });
-        if (!navigator.canShare({ files: [archivo] })) { aviso('', false, st); enlace(); return; }
-        return compartir();
-      }).catch(function () { aviso('', false, st); enlace(); }).then(function () { busy(btn, false); });
+      preparar(ext).then(listo, fallo).then(function () { busy(btn, false); });
     });
   });
 
-  // enlace directo …/#whatsapp: lleva al botón, lo resalta y deja el audio precargado
-  // (así el primer toque abre WhatsApp al instante)
+  // precarga del audio del envío rápido cuando la sección se ve (así el primer toque ya comparte)
+  var qbtn = sec.querySelector('.quick-send [data-action="share"]');
+  function precargar() { if (puedeArchivos) preparar(qbtn.dataset.ext).catch(function () {}); }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); precargar(); }
+    }, { rootMargin: '200px' });
+    io.observe(sec.querySelector('.quick-send'));
+  }
+
+  // enlace directo …/#whatsapp: lleva al botón, lo resalta y precarga el audio
   function directo() {
     if (location.hash !== '#whatsapp') return;
-    var q = sec.querySelector('.quick-send'), b = q.querySelector('[data-action="share"]');
+    var q = sec.querySelector('.quick-send');
     sec.classList.add('is-direct');
     q.classList.add('is-highlight');
     setTimeout(function () { q.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 150);
-    traer(b.dataset.ext).catch(function () {});
+    precargar();
   }
   directo();
   window.addEventListener('hashchange', directo);
