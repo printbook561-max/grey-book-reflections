@@ -360,6 +360,7 @@ El cambio en nuestras personalidades se producirá con el tiempo, no de la noche
   // descargas sueltas con nombre bonito (si falla, el enlace normal sigue funcionando)
   sec.querySelectorAll('.format-chip').forEach(function (a) {
     a.addEventListener('click', function (e) {
+      if (esIOS) return;  // iPhone: abre el archivo en el reproductor de iOS (ver más abajo)
       e.preventDefault(); var ext = a.dataset.ext; aviso(msgs.preparing);
       traer(ext).then(function (b) { guardar(b, nombre + '.' + ext); aviso(''); })
         .catch(function () { aviso(''); window.location.href = a.href; });
@@ -395,8 +396,20 @@ El cambio en nuestras personalidades se producirá con el tiempo, no de la noche
   // sin esperar descargas. Por eso el archivo se prepara antes (al ver la sección o al tocar) y,
   // si aún no está, el primer toque lo prepara y el botón pide un segundo toque. Nada se queda colgado:
   // la descarga tiene tiempo límite y siempre quedan "Solo el enlace" y "Descargar audio".
-  var esApple = /iP(hone|ad|od)/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && 'ontouchend' in document);
-  var puedeArchivos = !!(navigator.canShare && navigator.share && window.File);
+  var ua = navigator.userAgent;
+  var esIOS = /iP(hone|ad|od)/.test(ua) || (/Macintosh/.test(ua) && 'ontouchend' in document);
+  var esApple = esIOS;
+  // Chrome/Firefox/Edge/Opera en iPhone: dicen que pueden compartir archivos, pero se quedan colgados.
+  // Ahí se usa el camino seguro: WhatsApp con el texto, el enlace de la página y el enlace directo al audio.
+  var iosNoSafari = esIOS && /CriOS|FxiOS|EdgiOS|OPiOS|GSA\//.test(ua);
+  var puedeArchivos = !iosNoSafari && !!(navigator.canShare && navigator.share && window.File);
+  if (esIOS) {
+    // en iPhone el atributo download no sirve con archivos de otro dominio: se abre el reproductor
+    // de iOS (desde ahí: botón Compartir → WhatsApp o "Guardar en Archivos")
+    sec.querySelectorAll('[data-alt-audio], .format-chip').forEach(function (a) {
+      a.removeAttribute('download'); a.target = '_blank'; a.rel = 'noopener';
+    });
+  }
   var texto = titulo + '\n' + url;
   var archivos = {};          // ext → File listo para compartir
   var preparando = {};        // ext → promesa en curso
@@ -406,7 +419,7 @@ El cambio en nuestras personalidades se producirá con el tiempo, no de la noche
   }
   function preparar(ext) {
     if (archivos[ext]) return Promise.resolve(archivos[ext]);
-    if (!preparando[ext]) preparando[ext] = conLimite(traer(ext), 25000).then(function (b) {
+    if (!preparando[ext]) preparando[ext] = conLimite(traer(ext), 15000).then(function (b) {
       var f = new File([b], nombre + '.' + ext, { type: tipos[ext] });
       if (!navigator.canShare({ files: [f] })) throw new Error('no-share');
       return (archivos[ext] = f);
