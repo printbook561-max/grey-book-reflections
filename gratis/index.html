@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reflexiones del Libro Gris — Gratis para escuchar, leer e imprimir</title>
+<meta name="description" content="Una reflexión para cada día del año. Podcast diario, libro electrónico y PDF para imprimir. Todo gratis.">
+<meta property="og:title" content="Reflexiones del Libro Gris — Gratis">
+<meta property="og:description" content="Una reflexión para cada día del año. Podcast diario, libro electrónico y PDF para imprimir. Todo gratis.">
+<meta property="og:image" content="https://media.nabookiestranslations.org/libro/es/portada.jpg">
+<meta property="og:type" content="website">
+<link rel="alternate" type="application/rss+xml" title="Podcast Reflexiones del Libro Gris" href="https://podcast.nabookiestranslations.org/es/feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root { --fondo:#07091a; --tarjeta:rgba(255,255,255,.045); --borde:rgba(201,146,42,.28); --oro:#e8c46a; --oro2:#c9922a; --texto:#f2f0eb; --tenue:#a8aec8; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--fondo); color:var(--texto); font:16px/1.6 'DM Sans', system-ui, sans-serif;
+  background-image: radial-gradient(ellipse 70% 40% at 15% 0%, rgba(180,110,30,.22), transparent 60%), radial-gradient(ellipse 70% 40% at 90% 100%, rgba(30,50,140,.32), transparent 60%);
+  background-attachment: fixed; }
+.envoltura { max-width:640px; margin:0 auto; padding:28px 16px 48px; }
+header { text-align:center; padding:12px 0 8px; }
+header img { width:110px; height:110px; border-radius:50%; background:#fff; box-shadow:0 0 0 5px rgba(201,146,42,.35), 0 14px 40px rgba(0,0,0,.55); }
+h1 { font-family:'Cormorant Garamond', Georgia, serif; font-weight:600; font-size:2.4rem; line-height:1.05; color:var(--oro); margin:18px 0 8px; }
+header p { margin:0; color:var(--texto); }
+header .tenue { color:var(--tenue); }
+.btn { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; padding:15px 18px; margin:10px 0 0; border-radius:14px;
+  border:1px solid var(--borde); background:var(--tarjeta); color:var(--texto); text-decoration:none; font-weight:500; font-size:1rem; cursor:pointer; font-family:inherit; }
+.btn:hover { border-color:var(--oro2); }
+.btn.principal { background:linear-gradient(135deg,#e8c46a,#c9922a); color:#1a1205; border:0; font-weight:700; margin-top:22px; }
+.btn.wa { background:#1f7a4a; border-color:#25d366; }
+section { margin-top:26px; padding:22px 18px; border:1px solid var(--borde); border-radius:18px; background:var(--tarjeta); }
+h2 { font-family:'Cormorant Garamond', Georgia, serif; font-weight:600; font-size:1.7rem; color:var(--oro); margin:0 0 6px; }
+section > p { margin:0 0 6px; }
+.peq { font-size:.88rem; color:var(--tenue); }
+.feed { display:flex; gap:8px; margin-top:10px; }
+.feed input { flex:1; min-width:0; padding:12px; border-radius:10px; border:1px solid var(--borde); background:rgba(0,0,0,.35); color:var(--texto); font:13px/1.3 monospace; }
+.feed button { padding:0 16px; border-radius:10px; border:1px solid var(--borde); background:var(--tarjeta); color:var(--texto); cursor:pointer; font-family:inherit; }
+audio { width:100%; margin-top:14px; }
+ol { margin:6px 0 0; padding-left:20px; }
+footer { margin-top:30px; text-align:center; font-size:.82rem; color:var(--tenue); }
+footer p { margin:6px 0; }
+.aviso { position:fixed; left:50%; bottom:20px; transform:translateX(-50%); background:#1b2140; border:1px solid var(--borde); padding:10px 16px; border-radius:10px; display:none; }
+</style>
+</head>
+<body>
+<div class="envoltura">
+  <header>
+    <img src="https://media.nabookiestranslations.org/podcast/es/portada.jpg" alt="Print Books">
+    <h1>Reflexiones del Libro Gris</h1>
+    <p>Una reflexión para cada día del año.</p>
+    <p class="tenue">Gratis para escuchar, leer, imprimir y compartir.</p>
+    <a class="btn principal" id="hoy" href="/">📖 Leer la reflexión de hoy</a>
+  </header>
+
+  <section id="escuchar">
+    <h2>🎧 Escuchar</h2>
+    <p>El podcast diario: unos tres minutos, con voz humana. Cada mañana, una reflexión nueva.</p>
+    <p class="peq">Muy pronto en Spotify, Apple Podcasts, iVoox y Amazon Music. Mientras tanto, copia esta dirección y pégala en tu aplicación de podcasts («Añadir por URL» o «RSS»):</p>
+    <div class="feed"><input id="feed" readonly value="https://podcast.nabookiestranslations.org/es/feed.xml"><button type="button" onclick="copiar('feed')">Copiar</button></div>
+    <audio id="audio" controls preload="none"></audio>
+    <p class="peq" id="audio-txt"></p>
+  </section>
+
+  <section id="leer">
+    <h2>📱 Leer</h2>
+    <p>El libro completo, 366 reflexiones. Gratis.</p>
+    <a class="btn" href="https://media.nabookiestranslations.org/libro/es/reflexiones-libro-gris-pantalla.pdf">⬇️ PDF para leer en el móvil</a>
+    <a class="btn" href="https://media.nabookiestranslations.org/libro/es/reflexiones-libro-gris.epub">⬇️ EPUB para tu lector de libros</a>
+    <p class="peq" style="margin-top:10px">El EPUB se abre en Google Play Libros, Apple Books, Kobo y la mayoría de lectores. Muy pronto también en las tiendas, gratis.</p>
+  </section>
+
+  <section id="imprimir">
+    <h2>🖨️ Imprimir</h2>
+    <p>Para tu grupo, para la mesa de literatura, para llevar a un hospital o a un centro. Solo tinta negra.</p>
+    <a class="btn" href="https://media.nabookiestranslations.org/libro/es/reflexiones-libro-gris-a5.pdf">⬇️ Libro completo en A5 (PDF para imprimir)</a>
+    <p class="peq" style="margin-top:10px">A5 es media hoja A4: sale en cualquier copistería. Puedes imprimirlo y repartirlo sin pedirnos permiso, siempre que se entregue gratis o al coste de la copia.</p>
+  </section>
+
+  <section id="compartir">
+    <h2>🤝 Compartir</h2>
+    <p>Esto llega a quien lo necesita porque alguien se lo pasa.</p>
+    <a class="btn wa" id="wa" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+    <button class="btn" type="button" onclick="copiarTexto(location.origin + '/gratis/')">🔗 Copiar enlace</button>
+  </section>
+
+  <section id="mejorar">
+    <h2>✍️ Edición abierta a correcciones</h2>
+    <p>Este libro se publica ya y se corrige con quien lo lee. Si ves una errata o una frase que se puede decir mejor, escríbenos. Publicamos versiones corregidas cada cierto tiempo.</p>
+    <p>Dinos tres cosas: la fecha de la lectura, cómo está escrito ahora y cómo lo pondrías tú.</p>
+    <a class="btn" href="mailto:reflexiones@nabookiestranslations.org?subject=Correcci%C3%B3n%20%E2%80%93%20fecha%20de%20la%20lectura&amp;body=Fecha%20de%20la%20lectura%3A%20%0AC%C3%B3mo%20est%C3%A1%20escrito%20ahora%3A%20%0AC%C3%B3mo%20lo%20pondr%C3%ADa%20yo%3A%20">✉️ Proponer una corrección</a>
+    <p class="peq" style="margin-top:10px">Versión actual: 25 de noviembre de 2026 · primera edición abierta.</p>
+    <p class="peq">Entre todos lo dejamos mejor.</p>
+  </section>
+
+  <footer>
+    <p>Gratis para leer, copiar e imprimir. Prohibida su venta por terceros. CC BY-NC-ND 4.0 · Print Books.</p>
+    <p>Publicación independiente. Este libro no es el Libro Gris ni lo sustituye. No está afiliado, respaldado ni aprobado por ninguna confraternidad de Doce Pasos. No sustituye la atención médica o psicológica.</p>
+    <p><a href="/" style="color:var(--oro)">Volver a las reflexiones</a> · <a href="mailto:reflexiones@nabookiestranslations.org" style="color:var(--oro)">Contacto</a></p>
+  </footer>
+</div>
+<div class="aviso" id="aviso">✓ Copiado</div>
+<script>
+(function () {
+  var M = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  var m = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  var hoy = new Date();
+  var d = hoy.getDate(), mes = hoy.getMonth();
+  document.getElementById('hoy').href = '/' + d + '-de-' + M[mes] + '/';
+  var mmdd = String(mes + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+  document.getElementById('audio').src = 'https://media.nabookiestranslations.org/es/' + mmdd + '.mp3';
+  document.getElementById('audio-txt').textContent = 'Episodio de hoy: ' + d + ' de ' + m[mes] + '.';
+  var txt = 'Una reflexión para cada día, gratis para leer, escuchar e imprimir: ' + location.origin + '/gratis/';
+  document.getElementById('wa').href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(txt);
+})();
+function aviso() { var a = document.getElementById('aviso'); a.style.display = 'block'; setTimeout(function () { a.style.display = 'none'; }, 1800); }
+function copiarTexto(t) { (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(aviso, function () { prompt('Copia este enlace:', t); }); }
+function copiar(id) { copiarTexto(document.getElementById(id).value); }
+</script>
+</body>
+</html>
